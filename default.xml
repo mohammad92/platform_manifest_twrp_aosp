@@ -2,7 +2,7 @@
 <manifest>
 
   <remote  name="aosp"
-           fetch=".."
+           fetch="https://android.googlesource.com"
            review="https://android-review.googlesource.com/" />
   <default revision="refs/tags/android-12.1.0_r4"
            remote="aosp"
@@ -1104,4 +1104,6 @@
 
   <repo-hooks in-project="platform/tools/repohooks" enabled-list="pre-upload" />
 
+  <!-- FIRST: Add/Replace repos and particular directories needed by TWRP -->
+  <include name="twrp-default.xml" />
 </manifest>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remove-project name="platform/bootable/recovery" />
+
+  <remove-project name="platform/build" />
+  <remove-project name="platform/build/soong" />
+
+  <remove-project name="platform/external/bouncycastle" />
+
+  <remove-project name="platform/hardware/interfaces" />
+
+  <remove-project name="platform/system/core" />
+  <remove-project name="platform/system/libhidl" />
+  <remove-project name="platform/system/sepolicy" />
+  <remove-project name="platform/system/update_engine" />
+
+  <!-- LAST: Add/Replace repos and particular directories needed by TWRP -->
+  <include name="twrp-extras.xml" />
+</manifest>

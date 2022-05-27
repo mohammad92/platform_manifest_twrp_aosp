@@ -1,5 +1,4 @@
 ## Submitting Patches ##
-------------------
 Our project is open source, and patches are always welcome!
 You can send patches by using:
 
@@ -8,7 +7,6 @@ Pull request, right here on git.
 Contact us at https://rebrand.ly/teamwin-recovery-zulip-community
 
 ## Maintaining Authorship ##
-----------------------
 Maintaining authorship is a very important aspect of working with Open Source code. If you wish to submit a patch/fix
 from anywhere else (another ROM, project, etc.), it is imperative that you maintain the ownership of the person whose
 work you are seeking to include. Doing so will ensure that credit is given where it is deserved, and
@@ -41,8 +39,6 @@ me fix it because I was found out!" message.
 
 
 ## Getting Started ##
----------------
-
 To get started with AOSP sources to build TWRP, you'll need to get familiar
 with [Git and Repo](https://source.android.com/source/using-repo.html).
 
@@ -58,12 +54,20 @@ Then to sync up:
 
     repo sync
 
-NOTE: Device makefile in the device tree and dependencies file should use the "twrp" prefix.
+Then to setup the build:
 
-Then to build for a device with recovery partition:
+     cd <source-dir>; export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_<device>-eng
 
-     cd <source-dir>; export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_<device>-eng; mka recoveryimage
+The build target is dependent on the device, and should reflect the location of stock recovery on the device. Issue the build command that applies to your device:
+- Recovery partition: `mka recoveryimage`
+- Boot image ramdisk: `mka bootimage`
+- Vendor_boot image ramdisk: `mka vendorbootimage`
 
-Then to build for a device without recovery partition:
+### Special Notes for this branch
+- Device makefile in the device tree and dependencies file should use the "twrp" prefix.
+- Currently, decryption on 12.1 is a work in progress (WIP). Decryption is only fully functional (i.e. works with password/PIN/pattern) on legacy Pixel devices that use weaver but do not use wrappedkey. On other devices, decryption will only work if no password/PIN/pattern is set in Android.
+- FDE decryption is not presently supported in this branch.
+- In order to successfully build in this branch, the following patch(es) will need to be cherry-picked:
 
-     cd <source-dir>; export ALLOW_MISSING_DEPENDENCIES=true; . build/envsetup.sh; lunch twrp_<device>-eng; mka bootimage
+    - [fscrypt: wip](https://gerrit.twrp.me/c/android_bootable_recovery/+/5405)
+    - [fscrypt: move functionality to libvold](https://gerrit.twrp.me/c/android_system_vold/+/5540)
